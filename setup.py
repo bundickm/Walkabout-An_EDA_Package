@@ -12,7 +12,7 @@ with open('README.md','r') as fh:
     LONG_DESCRIPTION = fh.read()
 
 setuptools.setup(
-    name = 'eda',
+    name = 'walkabout',
     version = '0.0.1',
     author = 'bundickm',
     description = 'A package for quick exploratory analysis on all features in a dataframe',
