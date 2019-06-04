@@ -3,6 +3,7 @@ List of tasks that still need to be completed for eda
 
 ## Feature Additions
 - Create simple design guidelines documentation
+- Expand readme with example reports and images
 - Split support.py into internal support functions and minor/miscellaneous function calls useful during exploratory data analysis
 - Add box plots to plot.py
 - Statistical tests for MCAR, MNAR, and MAR
