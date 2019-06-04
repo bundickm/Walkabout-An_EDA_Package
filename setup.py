@@ -3,7 +3,7 @@ eda - a package for quick exploratory analysis on all features in a dataframe
 '''
 import setuptools
 
-required = [
+REQUIRED = [
     'numpy',
     'pandas'
 ]
