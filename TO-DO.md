@@ -11,11 +11,11 @@ List of tasks that still need to be completed for eda
 - Additional functions for variance
 
 ## Testing
-###report.py
+### report.py
 - All functions require testing
-###plot.py
+### plot.py
 - All functions require testing
-###support.py
+### support.py
 - All functions require testing
 
 ## Bugs
