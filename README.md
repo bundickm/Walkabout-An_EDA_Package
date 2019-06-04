@@ -1,25 +1,25 @@
-# EDA
+# Walkabout
 
-EDA is a Python package to rapidly perform common exploratory data analysis on all features of a Pandas DataFrame.
+Walkabout is a Python package to rapidly perform common exploratory data analysis on all features of a Pandas DataFrame.
 
 ## Installation
 
 Use the package manager test pypi (url here)
 
 ```bash
-pip install testpypi url eda
+pip install testpypi url walkabout
 ```
 
 ## Usage
 
 ```python
-import eda
+import walkabout as wa
 
-eda.report.rundown(df) #Display summary statistics including nulls, data types, unqiue values, and shape
+wa.report.rundown(df) #Display summary statistics including nulls, data types, unqiue values, and shape
 
-eda.plot.univariate_distribution(df) #Plot distribution graphs for all features
+wa.plot.univariate_distribution(df) #Plot distribution graphs for all features
 
-eda.plot.numeric_distribution(df) #Display skew, kurtosis, and basic translation of skew value for all numeric features.
+wa.plot.numeric_distribution(df) #Display skew, kurtosis, and basic translation of skew value for all numeric features.
 ```
 
 ## Contributing
