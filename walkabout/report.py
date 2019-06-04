@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from math import ceil
 from tabulate import tabulate
-import support
+from . import support
 
 
 def nulls(df, placeholders=[-1, -999, -9999, 'None', 'none', 'missing',
