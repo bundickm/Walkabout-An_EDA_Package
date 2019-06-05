@@ -5,6 +5,10 @@ from tabulate import tabulate
 from . import support
 
 
+#prevent above imports from showing when using functions like dir()
+__all__ = ['nulls', 'type_and_unique', 'rundown', 'assess_categoricals', 'numeric_distribution']
+
+
 def nulls(df, placeholders=[-1, -999, -9999, 'None', 'none', 'missing',
                             'Missing', 'Null', 'null', '?', 'inf']):
     '''
