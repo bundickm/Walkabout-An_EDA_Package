@@ -7,6 +7,12 @@ from matplotlib.colors import LinearSegmentedColormap
 from scipy.stats import probplot
 
 
+#prevent above imports from showing when using functions like dir(plot)
+__all__ = ['univariate_distribution', 'bivariate_categorical_distribution',
+           'probability', 'correlation_heatmap', 'null_correlation_heatmap',
+           'missingness_map']
+
+
 def univariate_distribution(df, cols=5, width=20, height=15,
                             hspace=0.2, wspace=0.5):
     '''
@@ -158,7 +164,7 @@ def null_correlation_heatmap(df, figsize=(5, 5), annot=True):
     sns.heatmap(null_corr, mask=mask, annot=annot, square=True)
 
 
-def missingness_map(df, data_name='DataFrame'):
+def missingness_map(df, figsize=(5,5), data_name='DataFrame'):
     '''
     graph of the location of all missing values in a dataframe
 
@@ -188,4 +194,5 @@ def missingness_map(df, data_name='DataFrame'):
     ax.collections[0].colorbar.set_ticklabels(['Null', 'Not Null'])
 
     # display the graph
+    plt.subplots(figsize=figsize)
     plt.show()
