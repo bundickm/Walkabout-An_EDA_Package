@@ -7,10 +7,11 @@ Walkabout is a Python package to rapidly perform common exploratory data analysi
 Use the package manager test pypi (url here)
 
 ```bash
-pip install testpypi url walkabout
+pip install -i https://test.pypi.org/simple/ walkabout
 ```
 
 ## Usage
+[Example Notebook](https://colab.research.google.com/drive/1Tufo97ZclCujjPtHhNoXNkjGKloi6y4S)
 
 ```python
 import walkabout as wa
