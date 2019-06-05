@@ -10,7 +10,7 @@ List of tasks that still need to be completed for eda
 - Update nulls report recommendations using MCAR, MNAR, and MAR testing
 - Additional functions for measures of centrality
 - Additional functions for variance
-- Add figsize param to missingness map
+- setup.py required libraries needs to be updated/corrected
 
 ## Testing
 ### report.py
