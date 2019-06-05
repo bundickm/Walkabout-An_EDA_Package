@@ -1,21 +1,27 @@
 import pandas as pd
 
+
+#prevent imports from showing with functions like dir()
+__all__ = ['list_to_string', 'strip_columns', 'outlier_mask', 'trimean',
+           'variance_coefficient']
+
+
 '''
-supporting functions for exploratory data analysis, eventually to be
+Supporting functions for exploratory data analysis, eventually to be
 broken into Support and Clean
 '''
 
 
 def _placeholders_present(column, placeholders):
     '''
-    return a list of values that are both in column and placeholders
+    Return a list of values that are both in column and placeholders
 
     Input:
     column: Pandas Series object
     placeholders: a list of values commonly used in place of null
 
     Output:
-    return a list of values that are both in column and placeholders
+    Return a list of values that are both in column and placeholders
     '''
     p_holds = []
     for item in placeholders:
@@ -61,7 +67,7 @@ def _skew_translation(skew):
     skew: float
 
     Output:
-    return a string  of skew's corresponding summary phrase
+    Return a string  of skew's corresponding summary phrase
     '''
     if (skew < -1) or (skew > 1):
         return 'Highly Skewed'
@@ -73,13 +79,13 @@ def _skew_translation(skew):
 
 def list_to_string(list):
     '''
-    helper function to convert lists to string and keep clean code
+    Helper function to convert lists to string and keep clean code
 
     Input:
     list: a list
 
     Output:
-    return a string made from list with comma and space separator
+    Return a string made from list with comma and space separator
     between values.
     '''
     return ', '.join(str(item) for item in list)
@@ -94,7 +100,7 @@ def strip_columns(df):
     df: Pandas DataFrame Object
 
     Output:
-    return a Pandas DataFrame object
+    Return a Pandas DataFrame object
     '''
     df = df.copy()
 
@@ -106,7 +112,7 @@ def strip_columns(df):
 
 def outlier_mask(feature, inclusive=True):
     '''
-    creates a mask of the outliers using IQR
+    Creates a mask of the outliers using IQR
 
     Input:
     feature: Pandas Series object containing numeric values
@@ -115,7 +121,7 @@ def outlier_mask(feature, inclusive=True):
               cases as outliers.
 
     Output:
-    return a Pandas Series object of booleans where True values correspond
+    Return a Pandas Series object of booleans where True values correspond
     to outliers in the original feature
     '''
     q1 = feature.quantile(.25)
