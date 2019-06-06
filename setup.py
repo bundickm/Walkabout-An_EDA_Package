@@ -4,12 +4,6 @@ walkabout - a package for quick exploratory analysis on all features in a datafr
 import setuptools
 
 REQUIRED = [
-    'numpy',
-    'pandas',
-    'seaborn',
-    'tabulate',
-    'math',
-    'matplotlib',
 ]
 
 with open('README.md','r') as fh:
