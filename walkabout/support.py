@@ -76,18 +76,19 @@ def _skew_translation(skew):
         return 'Approximately Symmetric'
 
 
-def list_to_string(list):
+def list_to_string(list, separator=', '):
     '''
     Helper function to convert lists to string and keep clean code
 
     Input:
     list: a list
+    separator: a string used as the separating value between items
+               in the list, default = ', '
 
     Output:
-    Return a string made from list with comma and space separator
-    between values.
+    Return a string made from list with separator between values.
     '''
-    return ', '.join(str(item) for item in list)
+    return separator.join(str(item) for item in list)
 
 
 def strip_columns(df):
