@@ -1,7 +1,6 @@
 import pandas as pd
 
 
-#prevent imports from showing with functions like dir()
 __all__ = ['list_to_string', 'strip_columns', 'outlier_mask', 'trimean',
            'variance_coefficient']
 
@@ -93,7 +92,7 @@ def list_to_string(list):
 
 def strip_columns(df):
     '''
-    helper function to remove leading or trailing spaces from
+    Helper function to remove leading or trailing spaces from
     all values in a dataframe
 
     Input:

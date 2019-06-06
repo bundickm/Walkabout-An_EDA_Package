@@ -5,7 +5,11 @@ import setuptools
 
 REQUIRED = [
     'numpy',
-    'pandas'
+    'pandas',
+    'seaborn',
+    'tabulate',
+    'math',
+    'matplotlib',
 ]
 
 with open('README.md','r') as fh:
@@ -13,7 +17,7 @@ with open('README.md','r') as fh:
 
 setuptools.setup(
     name = 'walkabout',
-    version = '0.0.4',
+    version = '0.0.5',
     author = 'bundickm',
     description = 'A package for quick exploratory analysis on all features in a dataframe',
     long_description = LONG_DESCRIPTION,

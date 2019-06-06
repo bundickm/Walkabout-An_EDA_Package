@@ -4,17 +4,15 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from math import ceil
 from matplotlib.colors import LinearSegmentedColormap
-from scipy.stats import probplot
 
 
-#prevent above imports from showing when using functions like dir(plot)
 __all__ = ['univariate_distribution', 'bivariate_categorical_distribution',
            'probability', 'correlation_heatmap', 'null_correlation_heatmap',
            'missingness_map']
 
 
-def univariate_distribution(df, cols=5, width=20, height=15,
-                            hspace=0.2, wspace=0.5):
+def univariate_distribution(df, cols=5, figsize=(20,15),
+                            hspace=0.5, wspace=0.5):
     '''
     plot the distribution of all features in a dataframe
     original function found here:
@@ -23,8 +21,7 @@ def univariate_distribution(df, cols=5, width=20, height=15,
     Input:
     df: Pandas DataFrame object
     cols: number of graphs to display per row
-    width: figure width
-    height: figure height
+    figsize: tuple of floats representing height and width of the plots
     hspace: the amount of height reserved for space between subplots
     wspace: the amount of width reserved for space between subplots
 
@@ -32,7 +29,7 @@ def univariate_distribution(df, cols=5, width=20, height=15,
     Display n graphs to the screen, where n is the number of features in df
     '''
     # plot settings
-    fig = plt.figure(figsize=(width, height))
+    fig = plt.figure(figsize=figsize)
     fig.subplots_adjust(left=None, bottom=None, right=None, top=None,
                         wspace=wspace, hspace=hspace)
     rows = ceil(float(df.shape[1]) / cols)
@@ -51,8 +48,8 @@ def univariate_distribution(df, cols=5, width=20, height=15,
             plt.xticks(rotation=25)
 
 
-def bivariate_categorical_distribution(df, hue, cols=5, width=20,
-                                       height=15, hspace=0.2, wspace=0.5):
+def bivariate_categorical_distribution(df, hue, cols=5, figsize=(20, 15),
+                                       hspace=0.2, wspace=0.5):
     '''
     Plot a count of the categories from each categorical feature split by hue
     original function found here:
@@ -62,8 +59,7 @@ def bivariate_categorical_distribution(df, hue, cols=5, width=20,
     df: Pandas DataFrame object
     hue: a categorical feature, likely the target feature
     cols: number of graphs to display per row
-    width: figure width
-    height: figure height
+    figsize: tuple of floats representing height and width of the plots
     hspace: the amount of height reserved for space between subplots
     wspace: the amount of width reserved for space between subplots
 
@@ -72,7 +68,7 @@ def bivariate_categorical_distribution(df, hue, cols=5, width=20,
     '''
     # plot settings
     df = df.select_dtypes(include=[np.object])
-    fig = plt.figure(figsize=(width, height))
+    fig = plt.figure(figsize=figsize)
     fig.subplots_adjust(left=None, bottom=None, right=None, top=None,
                         wspace=wspace, hspace=hspace)
     rows = ceil(float(df.shape[1]) / cols)
@@ -86,16 +82,17 @@ def bivariate_categorical_distribution(df, hue, cols=5, width=20,
         g.set(yticklabels=substrings)
 
 
-def probability(df, cols=3, width=15, height=10, hspace=.5, wspace=5):
+
+def residuals(df, target, cols=3, figsize=(10, 15), hspace=1, wspace=1):
     '''
-    Create probability plots for all numeric features. Useful for
+    Create residual plots for all numeric features. Useful for
     seeing heteroscedasticity.
 
     Input:
     df: Pandas DataFrame object
+    target: string of the target feature in df
     cols: number of graphs to display per row
-    width: figure width
-    height: figure height
+    figsize: tuple of floats representing height and width of the plots
     hspace: the amount of height reserved for space between subplots
     wspace: the amount of width reserved for space between subplots
 
@@ -103,19 +100,20 @@ def probability(df, cols=3, width=15, height=10, hspace=.5, wspace=5):
     Display n graphs to the screen, where n is the number of
     numeric features in df
     '''
-    df_nums = df.select_dtypes(include='number')
+    X = df.drop(target, axis=1).select_dtypes(include='number')
+    y = df[target]
 
     # plot settings
-    fig = plt.figure(figsize=(width, height))
+    fig = plt.figure(figsize=figsize)
     fig.subplots_adjust(left=None, bottom=None, right=None, top=None,
                         wspace=wspace, hspace=hspace)
-    rows = ceil(float(df_nums.shape[1]) / cols)
+    rows = ceil(float(df.shape[1]) / cols)
 
     # plot graphs
-    for i, column in enumerate(df_nums.columns):
+    for i, column in enumerate(X.columns):
         ax = fig.add_subplot(rows, cols, i + 1)
-        probplot(df_nums[column], plot=plt)
-        ax.set_title(f'Probability Plot of:\n{column}')
+        sns.residplot(X[column], y, line_kws=dict(color='r'), lowess=True)
+        ax.set_title(column)
 
 
 def correlation_heatmap(df, figsize=(5, 5), annot=True):

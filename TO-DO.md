@@ -1,5 +1,5 @@
 # To Do List
-List of tasks that still need to be completed for eda
+List of tasks that still need to be completed for walkabout
 
 ## Feature Additions
 - Create simple design guidelines documentation
@@ -8,9 +8,9 @@ List of tasks that still need to be completed for eda
 - Add box plots to plot.py
 - Statistical tests for MCAR, MNAR, and MAR
 - Update nulls report recommendations using MCAR, MNAR, and MAR testing
+- Reports of time series analysis
 - Additional functions for measures of centrality
 - Additional functions for variance
-- setup.py required libraries needs to be updated/corrected
 
 ## Testing
 ### report.py
@@ -24,6 +24,5 @@ List of tasks that still need to be completed for eda
 - None currently identified
 
 ## Possible Extensions
-- Reports of time series analysis
 - Addition of imputation and cleaning methods
 - Addition of common and simple feature engineering such as datetime into Month, Day, and Year columns, or encoding common categoricals like states.
