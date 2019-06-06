@@ -5,12 +5,12 @@ List of tasks that still need to be completed for walkabout
 - Create simple design guidelines documentation
 - Expand readme with example reports and images
 - Split support.py into internal support functions and minor/miscellaneous function calls useful during exploratory data analysis
-- Add box plots to plot.py
 - Statistical tests for MCAR, MNAR, and MAR
 - Update nulls report recommendations using MCAR, MNAR, and MAR testing
 - Reports of time series analysis
 - Additional functions for measures of centrality
 - Additional functions for variance
+- Image analysis
 
 ## Testing
 ### report.py
