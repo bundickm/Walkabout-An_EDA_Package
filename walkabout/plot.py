@@ -7,11 +7,11 @@ from matplotlib.colors import LinearSegmentedColormap
 
 
 __all__ = ['univariate_distribution', 'bivariate_categorical_distribution',
-           'residuals', 'boxplot', 'correlation_heatmap', 'null_correlation_heatmap',
-           'missingness_map']
+           'residuals', 'boxplot', 'correlation_heatmap',
+           'null_correlation_heatmap', 'missingness_map']
 
 
-def univariate_distribution(df, cols=5, figsize=(20,15),
+def univariate_distribution(df, cols=5, figsize=(20, 15),
                             hspace=0.5, wspace=0.5):
     '''
     Plot the distribution of all features in a dataframe
@@ -82,7 +82,6 @@ def bivariate_categorical_distribution(df, hue, cols=5, figsize=(20, 15),
         g.set(yticklabels=substrings)
 
 
-
 def residuals(df, target, cols=3, figsize=(10, 15), hspace=1, wspace=1):
     '''
     Create residual plots for all numeric features. Useful for
@@ -116,17 +115,18 @@ def residuals(df, target, cols=3, figsize=(10, 15), hspace=1, wspace=1):
         ax.set_title(column)
 
 
-def boxplot(df, target=None, label_limit=10, figsize=(10,10), cols=3, wspace=.5, hspace=.5):
+def boxplot(df, target=None, label_limit=10, figsize=(10, 10),
+            cols=3, wspace=.5, hspace=.5):
     '''
-    Plot the box plot of all numeric features, or plot all features 
+    Plot the box plot of all numeric features, or plot all features
     against a numeric feature.
-    
+
     Input:
     df: Pandas DataFrame object
-    target: string, default None. Name of the target numeric feature in df. 
-            If target == None then only numeric features will generate a 
+    target: string, default None. Name of the target numeric feature in df.
+            If target == None then only numeric features will generate a
             boxplot
-    label_limit: int, default 10. The max number of labels in a feature before 
+    label_limit: int, default 10. The max number of labels in a feature before
                  it is excluded from the plotting of bivariate boxplots
     cols: number of graphs to display per row
     figsize: tuple of floats representing height and width of the plots
@@ -141,15 +141,15 @@ def boxplot(df, target=None, label_limit=10, figsize=(10,10), cols=3, wspace=.5,
     fig.subplots_adjust(left=None, bottom=None, right=None, top=None,
                         wspace=wspace, hspace=hspace)
     rows = ceil(float(df.shape[1]) / cols)
-    
-    if target == None: #Univariate boxplot
+
+    if target is None:  # Univariate boxplot
         numerics = df.select_dtypes(include='number').columns
         for i, column in enumerate(numerics):
             ax = fig.add_subplot(rows, cols, i + 1)
             ax.set_title(column)
             g = sns.boxplot(df[column])
-    else: #bivariate boxplot
-        columns = [col for col in df.columns 
+    else:  # bivariate boxplot
+        columns = [col for col in df.columns
                    if ((df[col].nunique() < 10) and (col != target))]
         for i, column in enumerate(columns):
             ax = fig.add_subplot(rows, cols, i + 1)
@@ -203,7 +203,7 @@ def null_correlation_heatmap(df, figsize=(5, 5), annot=True):
     sns.heatmap(null_corr, mask=mask, annot=annot, square=True)
 
 
-def missingness_map(df, figsize=(5,5), data_name='DataFrame'):
+def missingness_map(df, figsize=(5, 5), data_name='DataFrame'):
     '''
     graph of the location of all missing values in a dataframe
 

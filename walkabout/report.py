@@ -5,7 +5,8 @@ from tabulate import tabulate
 from . import support
 
 
-__all__ = ['nulls', 'type_and_unique', 'rundown', 'assess_categoricals', 'numeric_distribution']
+__all__ = ['nulls', 'type_and_unique', 'rundown', 'assess_categoricals', 
+           'numeric_distribution']
 
 
 def nulls(df, placeholders=[-1, -999, -9999, 'None', 'none', 'missing',
@@ -86,8 +87,8 @@ def type_and_unique(df, unq_limit=10):
     print(tabulate(table, headers))
 
 
-def rundown(df, include_shape = True, include_describe = True,
-            include_nulls = True, include_types_uniques = True):
+def rundown(df, include_shape=True, include_describe=True,
+            include_nulls=True, include_types_uniques=True):
     '''
     Report giving an overview of a dataframe
 
@@ -153,7 +154,7 @@ def assess_categoricals(df, low_thresh=.05, high_thresh=.51,
             table.append([feature, low_thresh_count, len(val_counts),
                           high_thresh_violators, low_thresh_violators])
         else:
-            table.append([feature, low_thresh_count, 
+            table.append([feature, low_thresh_count,
                           len(val_counts), high_thresh_violators])
 
     # output with tabulate library

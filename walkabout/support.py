@@ -41,7 +41,7 @@ def _null_rec_lookup(null_percent, placeholders=False):
     Output:
     Return a string recommendation
     '''
-    # Temp Recommendations - Switch to MCAR, MAR, MNAR assessment and recs
+    # Recommendation Change - Include MCAR once Little's T-test added
     # https://www.youtube.com/watch?v=2gkw2T5jAfo&feature=youtu.be
     # https://stefvanbuuren.name/fimd/sec-MCAR.html
     if placeholders:
