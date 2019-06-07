@@ -2,6 +2,9 @@
 
 Walkabout is a Python package to rapidly perform common exploratory data analysis on all features of a Pandas DataFrame.
 
+### What's in a name?
+A Walkabout is a term from Australian Aborigines and is a journey of discovery and of self. In earlier times, it was known as a rite of passage where male Aborigine adolescents would embark on a journey into the wilderness, sometimes for as long as six months.
+
 ## Installation
 
 Use the package manager test pypi (url here)
@@ -24,11 +27,9 @@ wa.plot.numeric_distribution(df) #Display skew, kurtosis, and basic translation 
 ```
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+If you are interested in contributing, have feature requests, or bugs - please reach out to me.
 
-Please make sure to update tests as appropriate.
-
-You may contact me via email at bundickm@gmail.com with suggestions, requests, etc..
+You may contact me via email at bundickm@gmail.com.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
