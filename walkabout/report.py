@@ -9,8 +9,9 @@ __all__ = ['nulls', 'type_and_unique', 'rundown', 'assess_categoricals',
            'numeric_distribution']
 
 
-def nulls(df, placeholders=[-1, -999, -9999, 'None', 'none', 'missing',
-                            'Missing', 'Null', 'null', '?', 'inf']):
+def nulls(df, placeholders=[-1, -999, -9999, 0, 'None', 'none',
+                            'missing', 'Missing', 'Null', 'null',
+                            '?', 'inf', np.inf]):
     '''
     Report null distribution, any possible placeholders, and
     simple recommendations
@@ -32,8 +33,8 @@ def nulls(df, placeholders=[-1, -999, -9999, 'None', 'none', 'missing',
     for column in df.columns:
         calc = null_count[column]/total*100
         null_per = str(calc)+'%'
-        p_hold = support._placeholders_present(df[column], placeholders)
-        rec = support._null_rec_lookup(calc, p_hold)
+        p_hold = _placeholders_present(df[column], placeholders)
+        rec = _null_rec_lookup(calc, p_hold)
         table.append([column, null_count[column], null_per, p_hold, rec])
 
     # output with tabulate library
@@ -73,7 +74,7 @@ def type_and_unique(df, unq_limit=10):
     '''
     cols = df.columns
     d_types = list(df.dtypes)
-    num_unique = list(df.nunique(dropna=False))
+    num_unique = list(df.nunique())
     table = []
     headers = ['Column', 'Type', 'nUnique', 'Unique Values']
 
@@ -81,7 +82,7 @@ def type_and_unique(df, unq_limit=10):
         unique_vals = support.list_to_string(
                       list(df[cols[i]].unique()[:unq_limit]))
         if num_unique[i] == 1:
-            unique_vals += 'WARNING: CONSTANT VALUE'
+            unique_vals += ' WARNING: CONSTANT VALUE'
         elif (len(list(df[cols[i]].unique())) > unq_limit):
             unique_vals += '...'
         table.append([cols[i], str(d_types[i]), num_unique[i], unique_vals])
@@ -182,7 +183,7 @@ def numeric_distribution(df):
 
     for col in cols:
         skew = df[col].skew()
-        table.append([col, skew, support._skew_translation(skew),
+        table.append([col, skew, _skew_translation(skew),
                      (df[col].kurtosis()-3)])
 
     print(tabulate(table, headers))
@@ -211,3 +212,68 @@ def high_correlations(df, threshold=.7):
                 table.append([columns[i], columns[j], corr_df.iloc[i, j]])
     print(tabulate(table, headers))
     print('\nThreshold:', threshold)
+
+
+def _placeholders_present(column, placeholders):
+    '''
+    Return a list of values that are both in column and placeholders
+
+    Input:
+    column: Pandas Series object
+    placeholders: a list of values commonly used in place of null
+
+    Output:
+    Return a list of values that are both in column and placeholders
+    '''
+    p_holds = []
+    for item in placeholders:
+        if len(column.isin([item]).unique()) == 2:
+            p_holds.append(item)
+    return support.list_to_string(list(set(p_holds)))
+
+
+def _null_rec_lookup(null_percent, placeholders=False):
+    '''
+    Recommend course of action for handling nulls based on
+    findings from Report.nulls
+
+    Input:
+    null_percent: float, percent of a column that is null
+    placeholders: bool, whether the column contains placeholders
+
+    Output:
+    Return a string recommendation
+    '''
+    # Recommendation Change - Include MCAR once Little's T-test added
+    # https://www.youtube.com/watch?v=2gkw2T5jAfo&feature=youtu.be
+    # https://stefvanbuuren.name/fimd/sec-MCAR.html
+    if placeholders:
+        return 'Possible Placeholders: Replace and rerun nulls report.'
+    elif null_percent == 100:
+        return 'Empty Column: Drop column'
+    elif null_percent >= 75:
+        return 'Near Empty Column: Create binary feature or drop'
+    elif null_percent >= 25:
+        return 'Partially Filled Column: Assess manually'
+    elif null_percent > 0:
+        return 'Mostly Filled Column: Impute values'
+    else:
+        return ''
+
+
+def _skew_translation(skew):
+    '''
+    Gives a summary phrase for a skew
+
+    Input:
+    skew: float
+
+    Output:
+    Return a string  of skew's corresponding summary phrase
+    '''
+    if (skew < -1) or (skew > 1):
+        return 'Highly Skewed'
+    if (-1 <= skew <= -.5) or (.5 <= skew <= 1):
+        return 'Moderately Skewed'
+    else:
+        return 'Approximately Symmetric'
