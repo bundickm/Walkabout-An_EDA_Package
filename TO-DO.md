@@ -12,6 +12,7 @@ List of tasks that still need to be completed for walkabout
 - Additional functions for measures of centrality
 - Additional functions for variance
 - Image analysis
+- remove 0 from placeholder lists in nulls() and placehold_to_nan()
 
 ## Testing
 ### report.py
