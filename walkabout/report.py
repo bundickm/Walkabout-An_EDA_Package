@@ -73,16 +73,17 @@ def type_and_unique(df, unq_limit=10):
     '''
     cols = df.columns
     d_types = list(df.dtypes)
-    num_unique = list(df.nunique())
+    num_unique = list(df.nunique(dropna=False))
     table = []
     headers = ['Column', 'Type', 'nUnique', 'Unique Values']
 
     for i in range(len(cols)):
         unique_vals = support.list_to_string(
                       list(df[cols[i]].unique()[:unq_limit]))
-        if (len(list(df[cols[i]].unique())) > unq_limit):
+        if num_unique[i] == 1:
+            unique_vals += 'WARNING: CONSTANT VALUE'
+        elif (len(list(df[cols[i]].unique())) > unq_limit):
             unique_vals += '...'
-
         table.append([cols[i], str(d_types[i]), num_unique[i], unique_vals])
     print(tabulate(table, headers))
 
@@ -152,10 +153,11 @@ def assess_categoricals(df, low_thresh=.05, high_thresh=.51,
         # append to table based on whether we are returning low_violators
         if return_low_violators is True:
             table.append([feature, low_thresh_count, len(val_counts),
-                          high_thresh_violators, low_thresh_violators])
+                          support.list_to_string(high_thresh_violators),
+                          support.list_to_string(low_thresh_violators)])
         else:
-            table.append([feature, low_thresh_count,
-                          len(val_counts), high_thresh_violators])
+            table.append([feature, low_thresh_count, len(val_counts),
+                          support.list_to_string(high_thresh_violators)])
 
     # output with tabulate library
     print(tabulate(table, headers))
@@ -184,3 +186,28 @@ def numeric_distribution(df):
                      (df[col].kurtosis()-3)])
 
     print(tabulate(table, headers))
+
+
+def high_correlations(df, threshold=.7):
+    '''
+    Report correlations in df that exceed the threshold.
+
+    Input:
+    df: Pandas DataFrame object
+    threshold: float, default is .7, range should be between [-1, 1],
+
+    Output:
+    Print report to the screen.
+    '''
+
+    table = []
+    headers = ['Feature 1', 'Feature 2', 'Value']
+    corr_df = df.corr()
+    columns = corr_df.columns
+
+    for i in range(len(corr_df)):
+        for j in range(i+1, len(corr_df)):
+            if ((corr_df.iloc[i, j]**2) > (threshold**2)):
+                table.append([columns[i], columns[j], corr_df.iloc[i, j]])
+    print(tabulate(table, headers))
+    print('\nThreshold:', threshold)
