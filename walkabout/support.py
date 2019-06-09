@@ -1,113 +1,14 @@
 import pandas as pd
+import numpy as np
 
 
 __all__ = ['list_to_string', 'strip_columns', 'outlier_mask', 'trimean',
-           'variance_coefficient']
+           'variance_coefficient', 'placehold_to_nan']
 
 
 '''
-Supporting functions for exploratory data analysis, eventually to be
-broken into Support and Clean
+Supporting functions for exploratory data analysis
 '''
-
-
-def _placeholders_present(column, placeholders):
-    '''
-    Return a list of values that are both in column and placeholders
-
-    Input:
-    column: Pandas Series object
-    placeholders: a list of values commonly used in place of null
-
-    Output:
-    Return a list of values that are both in column and placeholders
-    '''
-    p_holds = []
-    for item in placeholders:
-        if len(column.isin([item]).unique()) == 2:
-            p_holds.append(item)
-    return list_to_string(list(set(p_holds)))
-
-
-def _null_rec_lookup(null_percent, placeholders=False):
-    '''
-    Recommend course of action for handling nulls based on
-    findings from Report.nulls
-
-    Input:
-    null_percent: float, percent of a column that is null
-    placeholders: bool, whether the column contains placeholders
-
-    Output:
-    Return a string recommendation
-    '''
-    # Recommendation Change - Include MCAR once Little's T-test added
-    # https://www.youtube.com/watch?v=2gkw2T5jAfo&feature=youtu.be
-    # https://stefvanbuuren.name/fimd/sec-MCAR.html
-    if placeholders:
-        return 'Possible Placeholders: Replace and rerun nulls report.'
-    elif null_percent == 100:
-        return 'Empty Column: Drop column'
-    elif null_percent >= 75:
-        return 'Near Empty Column: Create binary feature or drop'
-    elif null_percent >= 25:
-        return 'Partially Filled Column: Assess manually'
-    elif null_percent > 0:
-        return 'Mostly Filled Column: Impute values'
-    else:
-        return ''
-
-
-def _skew_translation(skew):
-    '''
-    Gives a summary phrase for a skew
-
-    Input:
-    skew: float
-
-    Output:
-    Return a string  of skew's corresponding summary phrase
-    '''
-    if (skew < -1) or (skew > 1):
-        return 'Highly Skewed'
-    if (-1 <= skew <= -.5) or (.5 <= skew <= 1):
-        return 'Moderately Skewed'
-    else:
-        return 'Approximately Symmetric'
-
-
-def list_to_string(list, separator=', '):
-    '''
-    Helper function to convert lists to string and keep clean code
-
-    Input:
-    list: a list
-    separator: a string used as the separating value between items
-               in the list, default = ', '
-
-    Output:
-    Return a string made from list with separator between values.
-    '''
-    return separator.join(str(item) for item in list)
-
-
-def strip_columns(df):
-    '''
-    Helper function to remove leading or trailing spaces from
-    all values in a dataframe
-
-    Input:
-    df: Pandas DataFrame Object
-
-    Output:
-    Return a Pandas DataFrame object
-    '''
-    df = df.copy()
-
-    for col in df.select_dtypes(exclude='number').columns:
-        df[col] = df[col].str.strip()
-
-    return df
 
 
 def outlier_mask(feature, inclusive=True):
@@ -162,3 +63,54 @@ def variance_coefficient(feature):
     '''
 
     return (feature.var()/feature.mean())
+
+
+def list_to_string(list, separator=', '):
+    '''
+    Helper function to convert lists to string and keep clean code
+
+    Input:
+    list: a list
+    separator: a string used as the separating value between items
+               in the list, default = ', '
+
+    Output:
+    Return a string made from list with separator between values.
+    '''
+    # To-Do: rewrite to convert nested lists to string without lists inside
+    return separator.join(str(item) for item in list)
+
+
+def strip_columns(df):
+    '''
+    Helper function to remove leading or trailing spaces from
+    all values in a dataframe
+
+    Input:
+    df: Pandas DataFrame Object
+
+    Output:
+    Return a Pandas DataFrame object
+    '''
+    df = df.copy()
+
+    for col in df.select_dtypes(exclude='number').columns:
+        df[col] = df[col].str.strip()
+
+    return df
+
+
+def placehold_to_nan(df, placeholders=[-1, -999, -9999, 0, 'None', 'none',
+                                       'missing', 'Missing', 'Null', 'null',
+                                       '?', 'inf', np.inf]):
+    '''
+    Convert all values in df that are in placeholders to NaN
+
+    Input:
+    df: Pandas DataFrame or Series object
+    placeholders: a list of values used as placeholders for NaN
+
+    Output
+    Return df with all placeholder values fill with NaN
+    '''
+    return df.replace(placeholders, np.NaN)
