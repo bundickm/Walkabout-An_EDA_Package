@@ -1,6 +1,7 @@
 import unittest
 import pandas as pd
-from math import isnan
+import numpy as np
+import math
 import support
 
 
@@ -47,7 +48,9 @@ class SupportTrimeanTests(unittest.TestCase):
     '''
     Test the trimean function in support.py
     '''
-    # def test_empyt_object(self):
+    def test_empyt_object(self):
+        sample = pd.Series([])
+        self.assertEqual(math.isnan(support.trimean(sample)), True)
 
     def test_constant_value(self):
         sample = pd.Series([0, 0, 0, 0, 0])
@@ -76,8 +79,13 @@ class SupportVarianceCoefficientTests(unittest.TestCase):
     '''
     Test the variance_coefficient function in support.py
     '''
-    # def test_constant_value(self):
-    # def test_empty_object(self):
+    def test_constant_value(self):
+        sample = pd.Series([1, 1, 1, 1, 1])
+        self.assertEqual(support.variance_coefficient(sample), 0.0)
+
+    def test_empty_object(self):
+        sample = pd.Series([])
+        self.assertEqual(math.isnan(support.variance_coefficient(sample)), True)
 
     def test_steady_step_values(self):
         sample = pd.Series([10, 20, 30, 40, 50])
@@ -194,8 +202,38 @@ class SupportStripColumns(unittest.TestCase):
             list(support.strip_columns(sample)['a']),
             ['', '', ''])
 
-    # def test_strip_numeric_value(self):
 
+class PlaceholdToNanTests(unittest.TestCase):
+    def test_empty_object(self):
+        sample = pd.DataFrame()
+        self.assertEqual(list(support.placehold_to_nan(sample)), [])
+
+    def test_default_values(self):
+        sample = pd.DataFrame({'a': [-999, -1, '?', 'inf']})
+        for i in range(len(sample)):
+            val = list(support.placehold_to_nan(sample)['a'])[i]
+            self.assertEqual(math.isnan(val), True)
+
+    def test_multiple_features(self):
+        sample = pd.DataFrame({'a': [-1,'?','inf'],
+                               'b': ['null','none','Missing']})
+        for col in sample:
+            for i in range(len(sample[col])):
+                val = list(support.placehold_to_nan(sample)[col])[i]
+                self.assertEqual(math.isnan(val), True)
+    
+    def test_no_placeholds(self):
+         sample = pd.DataFrame({'a': [1, 2, 3, 4, 5]})
+         self.assertEqual(list(support.placehold_to_nan(sample)['a']), list(sample['a']))
+
+    def test_nondefault_placeholds(self):
+        sample = pd.DataFrame({'a': [1, 2, 3, 4, 5]})
+        self.assertEqual(math.isnan(list(support.placehold_to_nan(sample, [5])['a'])[4]), True)
+
+    def test_nondefault_placeholds_and_no_placeholds(self):
+        sample = pd.DataFrame({'a': [1, 2, 3, 4, 5]})
+        self.assertEqual(list(support.placehold_to_nan(sample, [6])['a']), list(sample['a']))
 
 if __name__ == '__main__':
     unittest.main()
+ 
