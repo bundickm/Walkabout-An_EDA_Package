@@ -9,7 +9,7 @@ __all__ = ['nulls', 'type_and_unique', 'rundown', 'assess_categoricals',
            'numeric_distribution']
 
 
-def nulls(df, placeholders=[-1, -999, -9999, 0, 'None', 'none',
+def nulls(df, placeholders=[-1, -999, -9999, 'None', 'none',
                             'missing', 'Missing', 'Null', 'null',
                             '?', 'inf', np.inf]):
     '''
