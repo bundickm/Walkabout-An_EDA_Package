@@ -12,7 +12,6 @@ List of tasks that still need to be completed for walkabout
 - Additional functions for measures of centrality
 - Additional functions for variance
 - Image analysis
-- remove 0 from placeholder lists in nulls() and placehold_to_nan()
 
 ## Testing
 ### report.py
@@ -20,12 +19,8 @@ List of tasks that still need to be completed for walkabout
 ### plot.py
 - All functions require testing
 ### support.py
-- need all testing for placehold_to_nan()
-- trimean() requires test for empty object
-- variance_coefficient() requires test for constant values and empty object
 - test_nested_lists() will fail until list_to_string() is rewritten
 - test_nested_lists_with_nondefault_separator() will fail until list_to_string() is rewritten
-- strip_columns() requires test for column with mixed string and numeric/bool/etc. values
 
 ## Bugs
 - None currently identified
