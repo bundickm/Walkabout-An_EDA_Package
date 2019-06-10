@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 
-
 __all__ = ['list_to_string', 'strip_columns', 'outlier_mask', 'trimean',
            'variance_coefficient', 'placehold_to_nan']
 
@@ -100,7 +99,7 @@ def strip_columns(df):
     return df
 
 
-def placehold_to_nan(df, placeholders=[-1, -999, -9999, 0, 'None', 'none',
+def placehold_to_nan(df, placeholders=[-1, -999, -9999, 'None', 'none',
                                        'missing', 'Missing', 'Null', 'null',
                                        '?', 'inf', np.inf]):
     '''
