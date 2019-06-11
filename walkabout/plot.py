@@ -190,17 +190,10 @@ def null_correlation_heatmap(df, figsize=(5, 5), annot=True):
     annot: bool, whether to display values inside the heatmap
 
     Output:
-    display heatmap of the correlations of nulls in df
+    Display heatmap of the correlations of nulls in df
     '''
-    null_corr = df.isnull().corr()
-
-    # generate a mask for the upper triangle
-    mask = np.zeros_like(null_corr, dtype=np.bool)
-    mask[np.triu_indices_from(mask)] = True
-
-    # plot it
-    plt.subplots(figsize=figsize)
-    sns.heatmap(null_corr, mask=mask, annot=annot, square=True)
+    null_df = df.isnull()
+    correlation_heatmap(null_df, figsize, annot)
 
 
 def missingness_map(df, figsize=(5, 5), data_name='DataFrame'):
