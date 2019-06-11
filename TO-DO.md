@@ -12,6 +12,8 @@ List of tasks that still need to be completed for walkabout
 - Additional functions for measures of centrality
 - Additional functions for variance
 - Image analysis
+- [Early feature importances](http://www.feat.engineering/stroke-exploration.html)
+  - Univariate and Interaction
 
 ## Testing
 ### report.py
