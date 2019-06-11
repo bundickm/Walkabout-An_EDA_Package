@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 from math import ceil
 from tabulate import tabulate
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import f_regression, f_classif
 from . import support
 
 
@@ -277,3 +279,36 @@ def _skew_translation(skew):
         return 'Moderately Skewed'
     else:
         return 'Approximately Symmetric'
+
+
+def simple_feature_importance(X, y, model='reg'):
+    score_func = {'reg': f_regression,
+                  'clas': f_classif}
+
+    # Score each of the features
+    bestfeatures = SelectKBest(score_func=score_func[model], k='all')
+    fit = bestfeatures.fit(X, y)
+
+    # Organize and return the scores
+    featureScores = pd.DataFrame([X.columns, fit.scores_]).T
+    featureScores.columns = ['Feature', 'Score']
+    return featureScores.sort_values(
+            'Score', ascending=False).set_index('Feature')
+
+
+def interaction_feature_importance(X, y, model='reg'):
+    df = pd.DataFrame()
+    cols = X.columns
+
+    # iterate over all features to get interaction features
+    for i in range(len(cols)):
+        for j in range(i, len(cols)):
+            # naming the feature
+            feature = cols[i] + ' * ' + cols[j]
+            if cols[i] == cols[j]:
+                feature = cols[i] + '^2'
+            # create the interaction feature
+            df[feature] = X[cols[i]] * X[cols[j]]
+
+    # call simple_feature_importance on the new dataframe
+    return simple_feature_importance(df, y, model)
