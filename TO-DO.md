@@ -13,7 +13,10 @@ List of tasks that still need to be completed for walkabout
 - Additional functions for variance
 - Image analysis
 - [Early feature importances](http://www.feat.engineering/stroke-exploration.html)
-  - Univariate and Interaction
+  - Univariate
+  - Feature interactions
+  - Polynomial
+  - logarithmic
 
 ## Testing
 ### report.py
