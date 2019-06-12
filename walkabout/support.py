@@ -64,7 +64,26 @@ def variance_coefficient(feature):
     return (feature.var()/feature.mean())
 
 
-def list_to_string(list, separator=', '):
+def _flatten_list(l):
+    '''
+    "Flatten" a nested list down to a single layer
+
+    Input:
+    l: A list
+
+    Output:
+    Return out, a list made of the values in nested list `l`
+    '''
+    out = []
+    for item in l:
+        if isinstance(item, (list, tuple)):
+            out.extend(_flatten_list(item))
+        else:
+            out.append(item)
+    return out
+
+
+def list_to_string(l, separator=', '):
     '''
     Helper function to convert lists to string and keep clean code
 
@@ -76,8 +95,8 @@ def list_to_string(list, separator=', '):
     Output:
     Return a string made from list with separator between values.
     '''
-    # To-Do: rewrite to convert nested lists to string without lists inside
-    return separator.join(str(item) for item in list)
+    l = _flatten_list(l)
+    return separator.join(str(item) for item in l)
 
 
 def strip_columns(df):
