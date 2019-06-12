@@ -144,14 +144,12 @@ class SupportListToStringTests(unittest.TestCase):
             '1A2A3A4A5')
 
     def test_nested_lists(self):
-        # This will fail until list_to_string is rewritten
         sample = [1, 2, 3, 4, [5, 5, 5]]
         self.assertEqual(
             support.list_to_string(sample),
             '1, 2, 3, 4, 5, 5, 5')
 
     def test_nested_lists_with_nondefault_separator(self):
-        # This will fail until list_to_string is rewritten
         sample = [1, 2, 3, 4, [5, 5, 5]]
         self.assertEqual(
             support.list_to_string(sample, '!'),
