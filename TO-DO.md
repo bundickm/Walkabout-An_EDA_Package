@@ -7,16 +7,10 @@ List of tasks that still need to be completed for walkabout
 - Statistical tests for MCAR (Little's T-Test)
 - Update nulls report recommendations using Little's T-Test
 - Update nulls report recommendations with details beyond "impute values" or "assess manually", such as "Impute with KNN"
-- Rewrite list_to_string() to convert nested lists into single string without lists
 - Reports of time series analysis
 - Additional functions for measures of centrality
 - Additional functions for variance
 - Image analysis
-- [Early feature importances](http://www.feat.engineering/stroke-exploration.html)
-  - Univariate
-  - Feature interactions
-  - Polynomial
-  - logarithmic
 
 ## Testing
 ### report.py
@@ -24,8 +18,7 @@ List of tasks that still need to be completed for walkabout
 ### plot.py
 - All functions require testing
 ### support.py
-- test_nested_lists() will fail until list_to_string() is rewritten
-- test_nested_lists_with_nondefault_separator() will fail until list_to_string() is rewritten
+- Need tests for _flatten_list()
 
 ## Bugs
 - None currently identified
