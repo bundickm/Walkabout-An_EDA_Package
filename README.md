@@ -1,30 +1,54 @@
 # Walkabout
 
-Walkabout is a Python package to rapidly perform common exploratory data analysis on all features of a Pandas DataFrame.
+Walkabout is a Python package to rapidly perform common exploratory data analysis on all features of a Pandas DataFrame. A single line of code is all you need to plot the distribution of all features, view detailed summary stats, find which feature interactions are likely to be important, and more. Walkabout is all about quick, easy discovery about your entire dataframe.
 
 ### What's in a name?
 A Walkabout is a term from Australian Aborigines and is a journey of discovery and of self. In earlier times, it was known as a rite of passage where male Aborigine adolescents would embark on a journey into the wilderness, sometimes for as long as six months.
 
 ## Installation
 
-Use the package manager test pypi (url here)
+Use the package manager test.pypi (https://test.pypi.org/project/walkabout/)
 
 ```bash
 pip install -i https://test.pypi.org/simple/ walkabout
 ```
 
 ## Usage
+If you would like to see all the functionality available in walkabout, check out the example notebook:
+
 [Example Notebook](https://colab.research.google.com/drive/1Tufo97ZclCujjPtHhNoXNkjGKloi6y4S)
 
 ```python
 import walkabout as wa
 
-wa.report.rundown(df) #Display summary statistics including nulls, data types, unqiue values, and shape
-
-wa.plot.univariate_distribution(df) #Plot distribution graphs for all features
-
-wa.plot.numeric_distribution(df) #Display skew, kurtosis, and basic translation of skew value for all numeric features.
+# Display summary statistics including nulls, data types, unqiue values, and shape
+wa.report.rundown(df)
 ```
+![](RUNDOWN IMAGE HERE)
+
+```python
+# Plot distribution graphs for all features
+wa.plot.univariate_distribution(df)
+```
+![](UNIVARIATE DISTRIBUTION IMAGE HERE)
+
+```python
+# Display skew, kurtosis, and basic translation of skew value for all numeric features.
+wa.plot.numeric_distribution(df)
+```
+![](NUMERIC DISTRIBUTION IMAGE HERE)
+
+```python
+# Plot box plots for all features, either univariate or bivariate
+wa.plot.boxplot(df, 'age')
+```
+![](BOXPLOT IMAGE HERE)
+
+```python
+# Quickly find which features might be important
+wa.report.simple_feature_importance(X, y, model='clas')
+```
+![](FEATURE IMPORTANCE IMAGE HERE)
 
 ## Contributing
 If you are interested in contributing, have feature requests, or bugs - please reach out to me.
