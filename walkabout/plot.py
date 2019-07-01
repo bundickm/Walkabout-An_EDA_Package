@@ -167,7 +167,7 @@ def correlation_heatmap(df, figsize=(5, 5), annot=True):
     annot: bool, whether to display values inside the heatmap
 
     Output:
-    display heatmap of the feature correlations of df
+    Display heatmap of the feature correlations of df
     '''
     corr = df.corr()
 
@@ -182,7 +182,7 @@ def correlation_heatmap(df, figsize=(5, 5), annot=True):
 
 def null_correlation_heatmap(df, figsize=(5, 5), annot=True):
     '''
-    heatmap of correlation heatmap of nulls
+    Heatmap of correlation heatmap of nulls
 
     Input:
     df: Pandas DataFrame object
@@ -198,14 +198,14 @@ def null_correlation_heatmap(df, figsize=(5, 5), annot=True):
 
 def missingness_map(df, figsize=(5, 5), data_name='DataFrame'):
     '''
-    graph of the location of all missing values in a dataframe
+    Graph of the location of all missing values in a dataframe
 
     Input:
     df: Pandas DataFrame object
     data_name: string for the title of the graph
 
     Output
-    graph of the location of all missing values in a dataframe
+    Graph of the location of all missing values in a dataframe
     '''
     # map where nulls are in the dataframe
     null_map = df.isnull()

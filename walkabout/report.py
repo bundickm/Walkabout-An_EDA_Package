@@ -1,19 +1,21 @@
 import pandas as pd
 import numpy as np
-from math import ceil, log
+from math import ceil
 from tabulate import tabulate
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import f_regression, f_classif
 from . import support
 
 
-__all__ = ['nulls', 'type_and_unique', 'rundown', 'assess_categoricals', 
-           'numeric_distribution']
+__all__ = ['nulls', 'type_and_unique', 'rundown', 'assess_categoricals',
+           'numeric_distribution', 'high_correlations',
+           'simple_feature_importance', 'interaction_feature_importance']
+
+PLACEHOLDERS = [-1, -999, -9999, 'None', 'none', 'missing', 'Missing', 
+                'Null', 'null', '?', 'inf', np.inf]
 
 
-def nulls(df, placeholders=[-1, -999, -9999, 'None', 'none',
-                            'missing', 'Missing', 'Null', 'null',
-                            '?', 'inf', np.inf]):
+def nulls(df, placeholders=PLACEHOLDERS):
     '''
     Report null distribution, any possible placeholders, and
     simple recommendations
@@ -216,7 +218,7 @@ def high_correlations(df, threshold=.7):
     print('\nThreshold:', threshold)
 
 
-def _placeholders_present(column, placeholders):
+def _placeholders_present(column, placeholders=PLACEHOLDERS):
     '''
     Return a list of values that are both in column and placeholders
 
@@ -234,7 +236,7 @@ def _placeholders_present(column, placeholders):
     return support.list_to_string(list(set(p_holds)))
 
 
-def _null_rec_lookup(null_percent, placeholders=False):
+def _null_rec_lookup(null_percent, placeholders=None):
     '''
     Recommend course of action for handling nulls based on
     findings from Report.nulls
@@ -282,20 +284,6 @@ def _skew_translation(skew):
 
 
 def simple_feature_importance(X, y, model='reg'):
-    '''
-    Uses sklearn.SelectKBest() to estimate feature importances
-    
-    Input:
-    X: Pandas DataFrame object containing features
-    y: Pandas DataFrame object of a single column containing
-       the target feature
-    model: string of either 'reg' or 'clas' for regression or
-           classification model
-
-    Output:
-    Return a Pandas DataFrame object containing the features in X
-    ordered by the score from SelectKBest()
-    '''
     score_func = {'reg': f_regression,
                   'clas': f_classif}
 
@@ -311,22 +299,6 @@ def simple_feature_importance(X, y, model='reg'):
 
 
 def interaction_feature_importance(X, y, model='reg'):
-    '''
-    Create a DataFrame of all bivariate feature interaction combinations
-    of the features in X and then call simple_feature_importance()
-    on the feature interaction DataFrame.
-    
-    Input:
-    X: Pandas DataFrame object containing features
-    y: Pandas DataFrame object of a single column containing
-       the target feature
-    model: string of either 'reg' or 'clas' for regression or
-           classification model
-
-    Output:
-    Return a Pandas DataFrame object containing a list of bivariate
-    feature interactions ordered by the score from SelectKBest()
-    '''
     df = pd.DataFrame()
     cols = X.columns
 
@@ -339,34 +311,6 @@ def interaction_feature_importance(X, y, model='reg'):
                 feature = cols[i] + '^2'
             # create the interaction feature
             df[feature] = X[cols[i]] * X[cols[j]]
-
-    # call simple_feature_importance on the new dataframe
-    return simple_feature_importance(df, y, model)
-
-
-def log_feature_importance(X, y, model='reg'):
-    '''
-    Create a DataFrame of all features in X transformed by log
-    and then call simple_feature_importance() on the log feature DataFrame.
-    
-    Input:
-    X: Pandas DataFrame object containing features
-    y: Pandas DataFrame object of a single column containing
-       the target feature
-    model: string of either 'reg' or 'clas' for regression or
-           classification model
-
-    Output:
-    Return a Pandas DataFrame object containing a list of log transformed
-    features ordered by the score from SelectKBest()
-    '''
-    df = pd.DataFrame()
-    cols = X.columns
-
-    # iterate over all features to create log features
-    for col in cols:
-        feature = 'log(' + col + ')'
-        df[feature] = log(X[col])
 
     # call simple_feature_importance on the new dataframe
     return simple_feature_importance(df, y, model)
