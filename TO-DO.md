@@ -2,8 +2,6 @@
 List of tasks that still need to be completed for walkabout
 
 ## Feature Additions
-- Create simple design guidelines documentation
-- Expand readme with example reports and images
 - Statistical tests for MCAR (Little's T-Test)
 - Update nulls report recommendations using Little's T-Test
 - Update nulls report recommendations with details beyond "impute values" or "assess manually", such as "Impute with KNN"
