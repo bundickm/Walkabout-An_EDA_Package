@@ -9,7 +9,7 @@ with open('README.md','r') as fh:
 
 setuptools.setup(
     name = 'walkabout',
-    version = '0.0.13',
+    version = '0.0.14',
     author = 'bundickm',
     description = 'A package for quick exploratory analysis on all features in a dataframe',
     long_description = LONG_DESCRIPTION,

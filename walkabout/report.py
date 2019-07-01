@@ -11,11 +11,8 @@ __all__ = ['nulls', 'type_and_unique', 'rundown', 'assess_categoricals',
            'numeric_distribution', 'high_correlations',
            'simple_feature_importance', 'interaction_feature_importance']
 
-PLACEHOLDERS = [-1, -999, -9999, 'None', 'none', 'missing', 'Missing', 
-                'Null', 'null', '?', 'inf', np.inf]
 
-
-def nulls(df, placeholders=PLACEHOLDERS):
+def nulls(df, placeholders=support.PLACEHOLDERS):
     '''
     Report null distribution, any possible placeholders, and
     simple recommendations
@@ -218,7 +215,7 @@ def high_correlations(df, threshold=.7):
     print('\nThreshold:', threshold)
 
 
-def _placeholders_present(column, placeholders=PLACEHOLDERS):
+def _placeholders_present(column, placeholders=support.PLACEHOLDERS):
     '''
     Return a list of values that are both in column and placeholders
 
