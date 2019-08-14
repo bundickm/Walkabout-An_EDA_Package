@@ -24,7 +24,7 @@ import walkabout as wa
 # Display summary statistics including nulls, data types, unqiue values, and shape
 wa.report.rundown(df)
 ```
-![](https://raw.githubusercontent.com/bundickm/walkabout/blob/master/images/rundown.png)
+![](https://raw.githubusercontent.com/bundickm/walkabout/master/images/rundown.png)
 
 ```python
 # Plot distribution graphs for all features
