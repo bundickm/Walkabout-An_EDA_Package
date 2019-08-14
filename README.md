@@ -24,31 +24,31 @@ import walkabout as wa
 # Display summary statistics including nulls, data types, unqiue values, and shape
 wa.report.rundown(df)
 ```
-![](RUNDOWN IMAGE HERE)
+![](https://raw.githubusercontent.com/bundickm/walkabout/blob/master/images/rundown.png)
 
 ```python
 # Plot distribution graphs for all features
 wa.plot.univariate_distribution(df)
 ```
-![](UNIVARIATE DISTRIBUTION IMAGE HERE)
+![](https://raw.githubusercontent.com/bundickm/walkabout/master/images/univariate_distribution.png)
 
 ```python
 # Display skew, kurtosis, and basic translation of skew value for all numeric features.
 wa.plot.numeric_distribution(df)
 ```
-![](NUMERIC DISTRIBUTION IMAGE HERE)
+![](https://raw.githubusercontent.com/bundickm/walkabout/master/images/numeric_distribution.png)
 
 ```python
 # Plot box plots for all features, either univariate or bivariate
 wa.plot.boxplot(df, 'age')
 ```
-![](BOXPLOT IMAGE HERE)
+![](https://raw.githubusercontent.com/bundickm/walkabout/master/images/boxplot.png)
 
 ```python
 # Quickly find which features might be important
 wa.report.simple_feature_importance(X, y, model='clas')
 ```
-![](FEATURE IMPORTANCE IMAGE HERE)
+![](https://raw.githubusercontent.com/bundickm/walkabout/master/images/feature_importance.png)
 
 ## Contributing
 If you are interested in contributing, have feature requests, or bugs - please reach out to me.
